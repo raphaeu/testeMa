@@ -4,11 +4,13 @@ namespace Core;
 
 class Controller{
     protected $data;
-    public function setData();
-    public function getData();
+    public function setData(){}
+    public function getData(){}
 
     public function view($file, $data){
-        //retorna view
+        echo "view: ".str_replace('\\', '/', $file);
+        //include(ROOT_VIEW.str_replace('\\', '/', $file).'.php');
+        include('/App/View/site/index.php');
     }
     public function response($file, $data){
         if($header == 'json') {

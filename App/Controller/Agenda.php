@@ -4,7 +4,7 @@ namespace App\Controller;
 use Core\Controller;
 use Model\AgendaRepository;
 
-class AgendaController extends Controller
+class Agenda extends Controller
 {
     public function index()
     {
