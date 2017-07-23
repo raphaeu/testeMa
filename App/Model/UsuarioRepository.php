@@ -18,6 +18,18 @@ class UsuarioRepository {
         $user = $stmt->fetchObject(Usuario::class);        
         return $user;
     }
+    
+    public static function findUsuarioByEmailSenha($email, $senha)
+    {
+        $stmt = Db::getInstance()->prepare('SELECT *                                    
+                                    FROM usuario WHERE email = :email AND senha = :senha');
+        $stmt->execute([
+            'email' => $email,
+            'senha' => $senha
+        ]);
+        $user = $stmt->fetchObject(Usuario::class);        
+        return $user;
+    }
 
     public static function save(Usuario $usuario){
 
@@ -43,11 +55,13 @@ class UsuarioRepository {
                     ,telefone
                     ,email
                     ,senha
+                    ,perfil
                 ) VALUES (
                     :nome
                     ,:telefone
                     ,:email
                     ,:senha
+                    ,:perfil
                 )
             ');
         }
@@ -57,12 +71,14 @@ class UsuarioRepository {
         $telefone   =   $usuario->getTelefone();
         $email      =   $usuario->getEmail();
         $senha      =   $usuario->getSenha();
+        $perfil     =   $usuario->getPerfil();
 
 
         $stmt->bindParam('nome', $nome, \PDO::PARAM_STR);
         $stmt->bindParam('telefone', $telefone, \PDO::PARAM_STR);
         $stmt->bindParam('email', $email, \PDO::PARAM_STR);
         $stmt->bindParam('senha', $senha, \PDO::PARAM_STR);
+        $stmt->bindParam('perfil', $perfil, \PDO::PARAM_INT);
 
         return $stmt->execute();
         //echo $stmt->errorCode();exit;

@@ -14,10 +14,18 @@ class System{
 
 
         // Carregando informacoes da classe para instanciar
-        $controller     =   $router->getController();
-        $action         =   $router->getAction();
-        $parms          =   $router->getParms();
-        $method         =   $router->getMethod();
+        $controller      =   $router->getController();
+        $action          =   $router->getAction();
+        $parms           =   $router->getParms();
+        $method          =   $router->getMethod();
+        $authorized      =   $router->getAuthorization();
+        
+        
+        $auth = new Authorizer($authorized);
+        
+        if(!$auth->isAuthorized()) {
+            echo "Usuario nao autorizado";exit;
+        }
 
         // Instanciando classe e setando parametros por reflection
         $this->controllerIntance = new $controller;

@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use App\Controller\Response;
 
 class Controller {
 
@@ -33,7 +32,7 @@ class Controller {
     }
 
     public function redirect($url) {
-        
+        header('Location: '.$url);
     }
 
     public function json(Response $response) {

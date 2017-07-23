@@ -5,6 +5,7 @@ namespace App\Controller;
 use Core\Controller;
 use App\Model\Usuario;
 use App\Model\UsuarioRepository;
+use Core\Response;
 
 class UsuarioController extends Controller {
 
@@ -27,7 +28,8 @@ class UsuarioController extends Controller {
             $usuario->setNome($dados->nome);
             $usuario->setEmail($dados->email);
             $usuario->setTelefone($dados->telefone);
-            $usuario->setSenha($dados->senha);
+            $usuario->setSenha(md5($dados->senha));
+            $usuario->setPerfil(\Core\Profile::USER);
             
             UsuarioRepository::save($usuario);
             
@@ -39,8 +41,6 @@ class UsuarioController extends Controller {
         
     }
 
-    public function rrrr($a) {
-        echo "<h1>$a</h1>";
-    }
+    
 
 }

@@ -11,6 +11,7 @@ class Router {
     private $routeIndex;
     private $routeId;
     private $parms = [];
+    private $authorization;
 
     public function __construct() {
         $this->setRoutes();
@@ -20,6 +21,7 @@ class Router {
         $this->setController();
         $this->setAction();
         $this->setParms();
+        $this->setAuthorization();
     }
 
 
@@ -79,6 +81,12 @@ class Router {
         //verifica se existe
         $this->controller = $this->routes[$this->routeId]['controller'];
     }
+    
+    private function setAuthorization() {
+        $this->authorization = $this->routes[$this->routeId]['authorize'];
+    }
+    
+    
 
     private function setParms()
     {
@@ -114,6 +122,13 @@ class Router {
     {
         return $this->method;
     }
+    
+    function getAuthorization() 
+    {
+        return $this->authorization;
+    }
+
+
 
 
 }

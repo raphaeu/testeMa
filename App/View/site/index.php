@@ -18,7 +18,10 @@ include(ROOT_VIEW . '/site/layout/header.php');
                 <h3 class="panel-title">Login</h3>
             </div>
             <div class="panel-body">
-                <form method="POST" action="/registrar/123">
+                <form method="POST" action="/login" id="formLogin">
+                    <div class="alert" id="message" role="alert" style="display: none">
+                    
+                </div>
                     <div class="form-group">
                         <label for="inputEmail1">E-mail</label>
                         <input type="email" name="email" class="form-control" id="inputEmail1" placeholder="E-mail">
@@ -95,6 +98,40 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                     $(self).find('#message').addClass('alert-success');
                     $(self).find('#message').html(result.message);
                     $(self).find('#message').show();
+
+                },
+                error: function (xhr, resp, text) {
+                    $(self).find('#message').removeClass('alert-success');
+                    $(self).find('#message').addClass('alert-danger');
+                    $(self).find('#message').html('<b>' + xhr.responseJSON.message + '</b></br>');
+                    $.each(xhr.responseJSON.body, function (index, value) {
+                        $(self).find('#message').append(value + '</br>');
+                    });
+                    $(self).find('#message').show();
+                }
+            })
+
+            // cancelando o submit
+            event.preventDefault();
+
+        });
+        
+        // click on button submit
+        $("#formLogin").on('submit', function () {
+
+            // Validando campos
+
+            var self = this;
+            // enviando dados via ajax
+            $.ajax({
+                url: $(this).attr('action'), // url where to submit the request
+                type: $(this).attr('method'), // type of action POST || GET
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(ConvertFormToJSON($(this))),
+                encode: true,
+                success: function (result) {
+                   window.location.replace("/contato");
 
                 },
                 error: function (xhr, resp, text) {

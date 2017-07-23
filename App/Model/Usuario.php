@@ -1,7 +1,6 @@
 <?php
 namespace App\Model;
 
-use Core\Db as Db;
 
 class Usuario 
 {
@@ -11,6 +10,7 @@ class Usuario
     private $telefone;
     private $email;
     private $senha;
+    private $perfil;
 
 
     public function setId($id)
@@ -54,6 +54,14 @@ class Usuario
     {
         return $this->senha;
     }
+    function getPerfil() {
+        return $this->perfil;
+    }
+
+    function setPerfil($perfil) {
+        $this->perfil = $perfil;
+    }
+
 
 
 
