@@ -1,16 +1,15 @@
 <?php
 namespace App\Model;
 
-use Core\Model;
-
-class Agenda extends Model
+class Contato 
 {
 
     private $id;
     private $nome;
     private $telefone;
     private $email;
-
+    private $usuarioId;
+    
 
     public function setId($id)
     {
@@ -28,22 +27,30 @@ class Agenda extends Model
     {
         $this->email = $email;
     }
-
+    public function setUsuarioId($usuarioId)
+    {
+        $this->usuarioId = $usuarioId;
+    }
+  
     public function getId()
     {
         return $this->id;
     }
-    public function setNome()
+    public function getNome()
     {
         return $this->nome;
     }
-    public function setTelefone()
+    public function getTelefone()
     {
         return $this->telefone;
     }
-    public function setEmail()
+    public function getEmail()
     {
         return $this->email;
+    }
+    public function getUsuarioId()
+    {
+        return $this->usuarioId;
     }
 
 

@@ -39,8 +39,5 @@ class UsuarioController extends Controller {
         
     }
 
-    public function rrrr($a) {
-        echo "<h1>$a</h1>";
-    }
 
 }

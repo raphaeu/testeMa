@@ -39,7 +39,7 @@ include(ROOT_VIEW . '/site/layout/header.php');
             </div>
             <div class="panel-body">                
                 
-                <form method="POST" action="/registrar" id="formRegritrar">
+                <form method="POST" action="/registrar" id="formRegistrar">
                     <div class="alert" id="message" role="alert" style="display: none">
                     
                 </div>
@@ -77,7 +77,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
 <script>
     $(document).ready(function () {
         // click on button submit
-        $("#formRegritrar").on('submit', function () {
+        $("#formRegistrar").on('submit', function () {
 
             // Validando campos
 
@@ -114,14 +114,4 @@ include(ROOT_VIEW . '/site/layout/footer.php');
         });
     });
 
-
-    function ConvertFormToJSON(form) {
-        var array = jQuery(form).serializeArray();
-        var json = {};
-
-        jQuery.each(array, function () {
-            json[this.name] = this.value || '';
-        });
-        return json;
-    }
 </script>
