@@ -46,7 +46,8 @@ class Router {
                 }
             }
         }
-        die('nenhuma rota encontrada para '. $this->url);
+        throw new Exception\RouteNotFoundException('Nenhuma rota encontrada para '. $this->url);
+        
     }
 
 

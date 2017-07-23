@@ -2,54 +2,57 @@
 
 namespace Core;
 
+use Core\Exception\AuthenticationException;
+use Core\Exception\AuthorizationException;
+use Core\Exception\RouteNotFoundException;
+use Exception;
 use ReflectionMethod;
 
-class System{
+class System {
 
     private $controllerIntance;
 
-    public function run(){
+    public function run() {
 
-        $router = new Router();
+        try {
+            $router = new Router();
+            //Cria a instancia conexão com banco
+            Db::getInstance();
+
+            // Carregando informacoes da classe para instanciar
+            $controller = $router->getController();
+            $action = $router->getAction();
+            $parms = $router->getParms();
+            $method = $router->getMethod();
+            $authorized = $router->getAuthorization();
 
 
-        // Carregando informacoes da classe para instanciar
-        $controller      =   $router->getController();
-        $action          =   $router->getAction();
-        $parms           =   $router->getParms();
-        $method          =   $router->getMethod();
-        $authorized      =   $router->getAuthorization();
-        
-        
-        $auth = new Authorizer($authorized);
-        
-        if(!$auth->isAuthorized()) {
-            echo "Usuario nao autorizado";exit;
+            $auth = new Authorizer($authorized);
+
+            $auth->isAuthorized();
+
+            // Instanciando classe e setando parametros por reflection
+            $this->controllerIntance = new $controller;
+            // Setando dados do post/put na controller
+            if (in_array($method, ['PUT', 'POST'])) {
+                $this->controllerIntance->setData(file_get_contents('php://input'));
+            }
+
+            $reflectionMethod = new ReflectionMethod($controller, $action);
+            $reflectionMethod->invokeArgs($this->controllerIntance, $parms);
+        } catch (AuthorizationException $e) {
+            http_response_code(403);
+            include(ROOT_VIEW . '/erros/403.php');
+        } catch (AuthenticationException $e) {
+            http_response_code(401);
+            include(ROOT_VIEW . '/erros/404.php');
+        } catch (RouteNotFoundException $e) {
+            http_response_code(404);
+            include(ROOT_VIEW . '/erros/404.php');
+        } catch (Exception $e) {
+            http_response_code(500);
+            include(ROOT_VIEW . '/erros/500.php');
         }
-
-        // Instanciando classe e setando parametros por reflection
-        $this->controllerIntance = new $controller;
-        // Setando dados do post/put na controller
-        if (in_array($method , ['PUT', 'POST'] ) )
-        {
-            $this->controllerIntance->setData(file_get_contents('php://input'));
-        }
-
-        $reflectionMethod = new ReflectionMethod($controller, $action);
-        $reflectionMethod->invokeArgs($this->controllerIntance , $parms);
-
-        /*
-        echo "Method: ".$router->getMethod();
-        echo "<br>";
-        echo "Controller: ".$router->getController();
-        echo "<br>";
-        echo "Action: ".$router->getAction();
-        echo "<br>";
-        echo "Parms: ".print_r($router->getParms(),1);
-        echo "<br>";
-        echo "Data: ".print_r($this->controllerIntance->getData(),1);
-*/
-
     }
 
 }
