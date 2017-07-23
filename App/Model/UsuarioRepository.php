@@ -4,8 +4,20 @@ namespace App\Model;
 
 use Core\Model;
 use Core\Db as Db;
+use App\Model\Usuario;
 
 class UsuarioRepository {
+    
+    public static function findUsuarioByEmail($email)
+    {
+        $stmt = Db::getInstance()->prepare('SELECT *                                    
+                                    FROM usuario WHERE email = :email');
+        $stmt->execute([
+            'email' => $email
+        ]);
+        $user = $stmt->fetchObject(Usuario::class);        
+        return $user;
+    }
 
     public static function save(Usuario $usuario){
 

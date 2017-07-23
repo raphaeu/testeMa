@@ -1,14 +1,14 @@
 <?php
-include(ROOT_VIEW.'/site/layout/header.php');
+include(ROOT_VIEW . '/site/layout/header.php');
 ?>
 <!-- Main component for a primary marketing message or call to action -->
 <div class="jumbotron">
-  <h1>Navbar example</h1>
-  <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-  <p>To see the difference between static and fixed top navbars, just scroll.</p>
-  <p>
-    <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-  </p>
+    <h1>Navbar example</h1>
+    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+    <p>To see the difference between static and fixed top navbars, just scroll.</p>
+    <p>
+        <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+    </p>
 </div>
 
 <div class="row">
@@ -37,14 +37,12 @@ include(ROOT_VIEW.'/site/layout/header.php');
             <div class="panel-heading">
                 <h3 class="panel-title">Registrar</h3>
             </div>
-            <div class="panel-body">
-                <div class="alert alert-danger" role="alert">
-                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                </div>
-                <div class="alert alert-success" role="alert">
-                    <strong>Well done!</strong> You successfully read this important alert message.
-                </div>
+            <div class="panel-body">                
+                
                 <form method="POST" action="/registrar" id="formRegritrar">
+                    <div class="alert" id="message" role="alert" style="display: none">
+                    
+                </div>
                     <div class="form-group">
                         <label for="inputNome1">Nome</label>
                         <input type="text" name="nome" class="form-control" id="inputNome1" placeholder="Nome">
@@ -74,31 +72,39 @@ include(ROOT_VIEW.'/site/layout/header.php');
 
 
 <?php
-include(ROOT_VIEW.'/site/layout/footer.php');
+include(ROOT_VIEW . '/site/layout/footer.php');
 ?>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         // click on button submit
-        $("#formRegritrar").on('submit', function(){
+        $("#formRegritrar").on('submit', function () {
 
             // Validando campos
 
-
+            var self = this;
             // enviando dados via ajax
             $.ajax({
                 url: $(this).attr('action'), // url where to submit the request
-                type : $(this).attr('method'), // type of action POST || GET
+                type: $(this).attr('method'), // type of action POST || GET
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                data : JSON.stringify(ConvertFormToJSON($(this))),
-                encode : true,
-                success : function(result) {
-                    // you can see the result from the console
-                    // tab of the developer tools
-                    console.log(result);
+                data: JSON.stringify(ConvertFormToJSON($(this))),
+                encode: true,
+                success: function (result) {
+                    $(self).find('#message').removeClass('alert-danger');
+                    $(self).find('#message').addClass('alert-success');
+                    $(self).find('#message').html(result.message);
+                    $(self).find('#message').show();
+
                 },
-                error: function(xhr, resp, text) {
-                    console.log(xhr, resp, text);
+                error: function (xhr, resp, text) {
+                    $(self).find('#message').removeClass('alert-success');
+                    $(self).find('#message').addClass('alert-danger');
+                    $(self).find('#message').html('<b>' + xhr.responseJSON.message + '</b></br>');
+                    $.each(xhr.responseJSON.body, function (index, value) {
+                        $(self).find('#message').append(value + '</br>');
+                    });
+                    $(self).find('#message').show();
                 }
             })
 
@@ -109,11 +115,11 @@ include(ROOT_VIEW.'/site/layout/footer.php');
     });
 
 
-    function ConvertFormToJSON(form){
+    function ConvertFormToJSON(form) {
         var array = jQuery(form).serializeArray();
         var json = {};
 
-        jQuery.each(array, function() {
+        jQuery.each(array, function () {
             json[this.name] = this.value || '';
         });
         return json;

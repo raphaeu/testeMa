@@ -12,10 +12,7 @@ class AgendaController extends Controller
 
     }
 
-    public function list() {
-        return json();
-    }
-
+  
     public function create(){}
     public function store(){
         //valida
