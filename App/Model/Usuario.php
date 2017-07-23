@@ -1,15 +1,16 @@
 <?php
 namespace App\Model;
 
-use Core\Model;
+use Core\Db as Db;
 
-class Agenda extends Model
+class Usuario 
 {
 
     private $id;
     private $nome;
     private $telefone;
     private $email;
+    private $senha;
 
 
     public function setId($id)
@@ -28,22 +29,30 @@ class Agenda extends Model
     {
         $this->email = $email;
     }
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
 
     public function getId()
     {
         return $this->id;
     }
-    public function setNome()
+    public function getNome()
     {
         return $this->nome;
     }
-    public function setTelefone()
+    public function getTelefone()
     {
         return $this->telefone;
     }
-    public function setEmail()
+    public function getEmail()
     {
         return $this->email;
+    }
+    public function getSenha()
+    {
+        return $this->senha;
     }
 
 

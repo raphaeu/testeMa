@@ -3,21 +3,27 @@
 return array(
     array(
         'method'     =>   'GET',
-        'resource'   =>   '/:a/:b',
-        'controller' =>   'Site',
+        'route'   =>   '/',
+        'controller' =>   'SiteController',
         'action'     =>   'index',
     ),
     array(
         'method'     =>   'GET',
-        'resource'   =>   '/registrar',
-        'controller' =>   'Site',
-        'action'     =>   'registrar',
+        'route'   =>   '/teste/:a/tttt/:b',
+        'controller' =>   'SiteController',
+        'action'     =>   'index',
     ),
     array(
         'method'     =>   'GET',
-        'resource'   =>   '/usuario/:id',
-        'controller' =>   'Usuario',
-        'action'     =>   'show',
+        'route'   =>   '/teste/:a',
+        'controller' =>   'SiteController',
+        'action'     =>   'index',
+    ),
+    array(
+        'method'     =>   'POST',
+        'route'   =>   '/registrar',
+        'controller' =>   'UsuarioController',
+        'action'     =>   'registrar',
     )
 
 );

@@ -14,9 +14,7 @@ class Db {
    public static function getInstance()
    {
        if (self::$instance === null) {
-           self::$instance = new \PDO(sprintf('%s:host=%s;dbname=%s', getenv('DB_DRIVER'),
-               getenv('DB_HOST'), getenv('DB_DATABASE')),
-               getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
+           self::$instance = new \PDO('mysql:host=localhost;dbname=madero', 'root', 'root');;
        }
        return self::$instance;
    }

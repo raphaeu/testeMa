@@ -36,7 +36,7 @@ class Router {
         foreach($this->routes as $index => $route){
             if ($this->method == $route['method'])
             {
-                $aRoute = $this->explodeUrl($route['resource']);
+                $aRoute = $this->explodeUrl($route['route']);
                 if (count(array_udiff_assoc($aUrl, $aRoute,'arrayCompAux')) == 0 && count($aRoute) == count($aUrl))
                 {
                     $this->routeId = $index;
@@ -49,7 +49,7 @@ class Router {
 
 
     private function setUrl(){
-        $this->url =$_SERVER['PATH_INFO'];
+        $this->url =isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'';
     }
 
     private function explodeUrl($str)
@@ -61,7 +61,7 @@ class Router {
                     $return[] =  $val;
                 }
             }
-            return $return;
+            return isset($return)?$return:[];
         }
     }
 
@@ -75,17 +75,17 @@ class Router {
         //verifica se exsite
         $this->action = $this->routes[$this->routeId]['action'];
     }
-    private function setController($controller){
+    private function setController(){
         //verifica se existe
         $this->controller = $this->routes[$this->routeId]['controller'];
     }
 
     private function setParms()
     {
-        if (strrpos($this->routes[$this->routeId]['resource'], ':'))
+        if (strrpos($this->routes[$this->routeId]['route'], ':'))
         {
             $aUrl = $this->explodeUrl($this->url);
-            $aRoute = $this->explodeUrl($this->routes[$this->routeId]['resource']);
+            $aRoute = $this->explodeUrl($this->routes[$this->routeId]['route']);
             foreach($aRoute as $index => $val)
             {
                 if (strrpos($val, ':') === 0)

@@ -4,13 +4,22 @@ namespace Core;
 
 class Controller{
     protected $data;
-    public function setData(){}
-    public function getData(){}
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+    public function getData()
+    {
+        return $this->data;
+    }
 
     public function view($file, $data){
-        echo "view: ".str_replace('\\', '/', $file);
-        //include(ROOT_VIEW.str_replace('\\', '/', $file).'.php');
-        include('/App/View/site/index.php');
+        $filename = ROOT_VIEW.str_replace('\\', '/', $file).'.php';
+        if (file_exists($filename))
+            include($filename);
+        else
+            die('View informada nao exite: '.$filename);
     }
     public function response($file, $data){
         if($header == 'json') {
