@@ -3,24 +3,36 @@
 return array(
     array(
         'method'     =>   'GET',
-        'route'   =>   '/',
+        'route'      =>   '/',
         'controller' =>   'SiteController',
         'action'     =>   'index',
         'authorize' => \Core\Profile::all()
     ),
-    array(
-        'method'     =>   'POST',
-        'route'   =>   '/registrar',
-        'controller' =>   'UsuarioController',
-        'action'     =>   'registrar',
-        'authorize' => \Core\Profile::all()
-    ),
+   
     array(
         'method'     =>   'POST',
         'route'   =>   '/login',
         'controller' =>   'AuthController',
         'action'     =>   'login',
         'authorize' => \Core\Profile::all()
+    ),
+    array(
+        'method'     =>     'POST',
+        'route'      =>     '/registrar',
+        'controller' =>     'UsuarioController',
+        'action'     =>     'registrar',
+    ),
+    array(
+        'method'    =>   'GET',
+        'route'     =>   '/contato',
+        'controller'=>   'ContatoController',
+        'action'    =>   'index',
+    ),
+    array(
+        'method'    =>   'POST',
+        'route'     =>   '/contato',
+        'controller'=>   'ContatoController',
+        'action'    =>   'salvar',
     ),
     array(
         'method'     =>   'GET',

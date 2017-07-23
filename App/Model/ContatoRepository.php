@@ -2,26 +2,28 @@
 
 namespace App\Model;
 
-use Core\Model;
 use Core\Db;
+use PDO;
 
-class AgendaRepository {
+class ContatoRepository {
 
-    public static function save(Agenda $agenda){
+    public static function save(Contato $contato){
 
-        if (isset($agenda->id)){
-            $sql = '
-                UPDATE FROM agenda SET
+        if (isset($contato->id)){
+            $stmt = Db::getInstance()->prepare('
+                UPDATE FROM contato SET
                     nome = :nome
                     ,telefone = :telefone
                     ,email = :email
                     ,usuario_id = :usuario_id
                 WHERE
                     id = :id
-            ';
+            ');
+            $id = $contato->getId();
+            $stmt->bindParam('id',$id , PDO::PARAM_INT);
         }else{
-            $sql = '
-                INSERT INTO agenda
+            $stmt = Db::getInstance()->prepare('
+                INSERT INTO contato
                 (
                     nome
                     ,telefone
@@ -33,23 +35,26 @@ class AgendaRepository {
                     ,:email
                     ,:usuario_id
                 )
-            ';
+            ');
         }
-        $stmt = Db::getInstance()->prepare($sql);
 
-        $stmt->bindParam('id', $agenda->getId(), \PDO::PARAM_INT);
-        $stmt->bindParam('usuario_id', $agenda->getUsuarioId(), \PDO::PARAM_INT);
-        $stmt->bindParam('nome', $agenda->getNome(), \PDO::PARAM_STR);
-        $stmt->bindParam('telefone', $agenda->getTelefone(), \PDO::PARAM_STR);
-        $stmt->bindParam('email', $agenda->getEmail(), \PDO::PARAM_STR);
+        $usuarioId = $contato->getUsuarioId();   
+        $nome = $contato->getNome();
+        $telefone = $contato->getTelefone();
+        $email = $contato->getEmail();
+        
+        $stmt->bindParam('usuario_id', $usuarioId , PDO::PARAM_INT);
+        $stmt->bindParam('nome', $nome , PDO::PARAM_STR);
+        $stmt->bindParam('telefone', $telefone , PDO::PARAM_STR);
+        $stmt->bindParam('email', $email , PDO::PARAM_STR);
 
        return $stmt->execute();
     }
 
     public static function destroy($id){
-        $sql = 'DELETE FROM agenda WHERE id=:id';
+        $sql = 'DELETE FROM contato WHERE id=:id';
         $stmt = Db::getInstance()->prepare($sql);
-        $stmt->bindParam('id', $agenda->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam('id', $contato->getId(), PDO::PARAM_INT);
         return $stmt->execute();
     }
 
@@ -62,13 +67,13 @@ class AgendaRepository {
                 ,email
                 ,usuario_id
             FROM
-                agenda
+                contato
             WHERE
                 id = :id
             )
         ';
         $stmt = Db::getInstance()->prepare($sql);
-        $stmt->bindParam('id', $agenda->getId(), \PDO::PARAM_INT);
+        $stmt->bindParam('id', $contato->getId(), PDO::PARAM_INT);
         return $stmt->execute();
     }
 
