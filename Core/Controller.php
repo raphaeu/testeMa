@@ -16,6 +16,7 @@ class Controller {
     }
 
     public function view($file, $data) {
+        extract($data);
         $filename = ROOT_VIEW . str_replace('\\', '/', $file) . '.php';
         if (file_exists($filename))
             include($filename);

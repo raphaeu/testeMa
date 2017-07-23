@@ -108,7 +108,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
 
     
         $.ajax({
-            url: '/contato/listar', // url where to submit the request
+            url: '/contato/listar/<?=$userId?>', // url where to submit the request
             type: 'GET', // type of action POST || GET
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -117,6 +117,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                 
             },
             error: function (xhr, resp, text) {
+                
             }
         })
     

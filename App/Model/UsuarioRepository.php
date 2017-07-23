@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Model\Usuario;
 use Core\Db as Db;
+use Core\Session;
 use PDO;
 
 class UsuarioRepository {
@@ -84,6 +85,11 @@ class UsuarioRepository {
         //echo $stmt->errorCode();exit;
     }
 
+
+
+
+
+
     public static function destroy($id){
         $sql = 'DELETE FROM usuario WHERE id=:id';
         $stmt = Db::getInstance()->prepare($sql);
@@ -93,7 +99,7 @@ class UsuarioRepository {
 
     public function find($id){
         $sql = '
-            SELECT
+//            SELECT
                 id
                 ,nome
                 ,telefone

@@ -4,13 +4,16 @@ namespace App\Controller;
 use App\Model\Contato;
 use App\Model\ContatoRepository;
 use Core\Controller;
+use Core\Response;
+use Core\Session;
 
 class ContatoController extends Controller
 {
     public function index()
     {
-        return $this->view('/site/contato/index', []);
+        return $this->view('/site/contato/index', ['userId' => Session::getUserSession()->getId()]);
     }
+    
 
     public function salvar()
     {
@@ -28,9 +31,8 @@ class ContatoController extends Controller
 
             $contato->setNome($dados->nome);
             $contato->setEmail($dados->email);
-            $contato->setTelefone($dados->telefone);
-            //pegar da sessao
-            $contato->setUsuarioId(1);
+            $contato->setTelefone($dados->telefone);    
+            $contato->setUsuarioId(Session::getUserSession()->getId());
             
             ContatoRepository::save($contato);
             
@@ -40,5 +42,19 @@ class ContatoController extends Controller
         return $this->json(new Response('Ocorreu um erro', $erros, 400));
 
     }
+    
+    public function listContacts($userId)
+    {
+        //verificar se os contatos pertence 
+        
+        if ($userId == Session::getUserSession()->getId())
+        {
+            $contacts = ContatoRepository::findContactsByUserId($userId);
+            return $this->json(new Response('Lista de contato existente.', $contacts));
+        } else{
+           //lancar erro de aceso negado
+        }   
+    }
+   
 
 }
