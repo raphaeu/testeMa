@@ -35,7 +35,7 @@ class Authorizer {
             }
         }
         
-        return false;        
+        throw new Exception\AuthorizationException('Usuário não autorizado');
     }
 
 }
