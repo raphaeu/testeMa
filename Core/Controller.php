@@ -19,8 +19,8 @@ class Controller {
         $filename = ROOT_VIEW . str_replace('\\', '/', $file) . '.php';
         if (file_exists($filename))
             include($filename);
-        else
-            die('View informada nao exite: ' . $filename);
+        else            
+            throw new \Exception('View informada nao exite: ' . $filename);
     }
 
     public function response($file, $data) {
