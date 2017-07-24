@@ -3,7 +3,8 @@
     </body>
 </html>
 <hr>
+<div class="container">
 <footer>
-  <p>&copy; 2017 Raphaeu, Inc.</p>
+  <p>&copy; 2017 Raphaeu, Pow.</p>
 </footer>
 </div> <!-- /container -->

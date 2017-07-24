@@ -17,7 +17,7 @@ class Authorizer {
         if (in_array(Profile::GUEST, $authorizeds)) {            
             return true;
         }
-        $usuario = Session::getUserSession();
+        $usuario = Auth::getUserSession();
         //Verifia se o usuário esta logado
         if ($usuario == null) {
             throw new AuthenticationException('Usuário não logado');

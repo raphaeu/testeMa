@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\UsuarioRepository;
 use Core\Controller;
 use Core\Response;
-use Core\Session;
+use Core\Auth;
 
 class AuthController extends Controller {
 
@@ -21,14 +21,14 @@ class AuthController extends Controller {
         !$usuario ? $erros['usuario'] = "Usuário ou senha inválidos" : '';
         
         if (empty($erros)) {
-            Session::authenticate($usuario);
+            Auth::authenticate($usuario);
             return $this->json(new Response('Logado com sucesso'));
         }
         return $this->json(new Response('Erro ao autenticar usuário', $erros, 400));
     }
 
     public function logout() {
-        Session::destroy();
+        Auth::destroy();
         $this->redirect("/");
     }
 

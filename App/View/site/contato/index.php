@@ -1,59 +1,25 @@
 <?php
 include(ROOT_VIEW . '/site/layout/header.php');
 ?>
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalContato">
-    Novo
-</button>
 
+<div class="container">
 
-<div class="alert" id="messageContato" role="alert" style="display: none"></div>
-<table class="table" id="contatos-table"> 
-    <caption>Relacao de contatos</caption> 
-    <thead> 
-        <tr> 
-            <th>#</th> 
-            <th>Nome</th> 
-            <th>E-mail</th> 
-            <th>Telefone</th> 
-        </tr> 
-    </thead> 
-
-</table>
-
-<!-- Modal -->
-<div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
-    <form method="POST" action="/contato" id="formContato">
-        <input type="hidden" value="" name="id"  />
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="ModalLabel">Contato</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="alert" id="message" role="alert" style="display: none"></div>
-                    <div class="form-group">
-                        <label for="inputNome1">Nome</label>
-                        <input type="text" name="nome" class="form-control" id="inputNome1" placeholder="Nome">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputEmail2">E-mail</label>
-                        <input type="email" name="email" class="form-control" id="inputEmail2" placeholder="E-mail">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTelefone1">Telefone</label>
-                        <input type="text" name="telefone" class="form-control" id="inputTelefone1" placeholder="Telefone">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
+    <div class="alert" id="messageContato" role="alert" style="display: none"></div>
+    <div class="row">
+        <div class="col-xs-6">
+            <h2>Contatos</h2>
         </div>
-    </form>
-</div>
+        <div class="col-xs-6">
+            <button class="btn btn-primary pull-right h2" data-toggle="modal" data-target="#modalContato">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo Contato
+            </button>     
+        </div>
+    </div>
+    <?php include(ROOT_VIEW . '/site/contato/list.php') ?>
 
+    <?php include(ROOT_VIEW . '/site/contato/form.php') ?>
+
+</div>
 <?php
 include(ROOT_VIEW . '/site/layout/footer.php');
 ?>
@@ -62,7 +28,14 @@ include(ROOT_VIEW . '/site/layout/footer.php');
     $(document).ready(function () {
 
 
+        $('#modalContato').on('hidden.bs.modal', function () {
+            $('#formContato [name=id]').val('');
+            $("#formContato")[0].reset();
+        });
 
+        $('#modalContato').on('shown.bs.modal', function () {
+            $('#formContato [name=nome]').focus();
+        });
 
         $("#formContato").on('submit', function () {
             var idContato = $(this).find('[name=id]').val();
@@ -164,12 +137,12 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                     var trHTML = '';
                     $.each(result.body, function (index, value) {
                         trHTML +=
-                                '<tr><td scope="row">' + value.id +
-                                '</td><td>' + value.nome +
+                                '<tr>' +
+                                '<td>' + value.nome +
                                 '</td><td>' + value.email +
                                 '</td><td>' + value.telefone +
-                                '</td><td><button class="btn btn-success editar-btn" data-id="' + value.id + '">Editar</button>' +
-                                '<button class="btn btn-danger excluir-btn" data-id="' + value.id + '">Excluir</button></td>' +
+                                '</td><td><div class="pull-right"><button class="btn btn-success btn-xs editar-btn" data-id="' + value.id + '"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  Editar</button>' +
+                                '&nbsp;<button class="btn btn-danger btn-xs excluir-btn" data-id="' + value.id + '"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir</button></div></td>' +
                                 '</tr>';
                     });
                     $('#contatos-table').append(trHTML);

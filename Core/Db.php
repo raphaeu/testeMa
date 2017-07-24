@@ -15,7 +15,7 @@ class Db {
      */
     public static function getInstance() {
         if (self::$instance === null) {
-            self::$instance = new \PDO('mysql:host=localhost;dbname=madero', 'root', 'root');
+            self::$instance = new \PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWORD);
             self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             self::$instance->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
         }

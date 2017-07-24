@@ -4,7 +4,7 @@ namespace App\Model;
 
 use App\Model\Usuario;
 use Core\Db as Db;
-use Core\Session;
+use Core\Auth;
 use PDO;
 
 class UsuarioRepository {

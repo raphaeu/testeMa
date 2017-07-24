@@ -29,7 +29,7 @@ class System {
 
             $auth = Authorizer::isAuthorized($authorized);
 
-            
+
 
             // Instanciando classe e setando parametros por reflection
             $this->controllerIntance = new $controller;
@@ -42,17 +42,40 @@ class System {
             $reflectionMethod->invokeArgs($this->controllerIntance, $parms);
         } catch (AuthorizationException $e) {
             http_response_code(403);
-            include(ROOT_VIEW . '/erros/403.php');
+            if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                echo json_encode([
+                    'message' => $e->getMessage(),
+                    ]);
+            } else {
+                include(ROOT_VIEW . '/erros/403.php');
+            }
         } catch (AuthenticationException $e) {
             http_response_code(401);
-            include(ROOT_VIEW . '/erros/404.php');
+            if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                echo json_encode([
+                    'message' => $e->getMessage(),
+                    ]);
+            } else {
+                include(ROOT_VIEW . '/erros/401.php');
+            }
         } catch (RouteNotFoundException $e) {
             http_response_code(404);
-            include(ROOT_VIEW . '/erros/404.php');
+            if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                echo json_encode([
+                    'message' => $e->getMessage(),
+                    ]);
+            } else {
+                include(ROOT_VIEW . '/erros/404.php');
+            }
         } catch (Exception $e) {
             http_response_code(500);
-            throw $e;
-            include(ROOT_VIEW . '/erros/500.php');
+            if (array_key_exists('HTTP_X_REQUESTED_WITH', $_SERVER) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+                echo json_encode([
+                    'message' => $e->getMessage(),
+                    ]);
+            } else {
+                include(ROOT_VIEW . '/erros/500.php');
+            }
         }
     }
 

@@ -24,13 +24,7 @@ class Controller {
             throw new \Exception('View informada nao exite: ' . $filename);
     }
 
-    public function response($file, $data) {
-        if ($header == 'json') {
-            $this->json($data);
-        } else {
-            $this->view($file, $data);
-        }
-    }
+
 
     public function redirect($url) {
         header('Location: '.$url);

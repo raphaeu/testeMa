@@ -9,5 +9,9 @@ class SiteController extends Controller
     {        
         return $this->view('/site/index', []);
     }
+    public function teste()
+    {        
+        return $this->view('/teste', []);
+    }
 
 }

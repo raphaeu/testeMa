@@ -12,6 +12,7 @@
 
         <!-- Bootstrap core CSS -->
         <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/css/main.css" rel="stylesheet">
         <script src="/public/js/utils.js"></script>
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -22,5 +23,5 @@
     </head>
 
     <body>
-        <?php include(ROOT_VIEW.'/site/layout/navbar.php'); ?>
-        <div class="container">
+        <?php include(ROOT_VIEW . '/site/layout/navbar.php'); ?>
+

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -7,20 +7,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><B>Igenda</b></a>
+            <a class="navbar-brand" href="/">Igenda</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#login">Login</a></li>
-                <li><a href="#registrar">Registrar</a></li>
-            </ul>
-            <?php if (\Core\Session::getUserSession()) { ?>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/logout">Sair</a></li>
-            </ul>
+                <ul class="nav navbar-nav ">
+                    <li><a href="/sobre">Saiba Mais</a></li>
+                </ul>
+            <?php if (\Core\Auth::getUserSession()) { ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout">Sair</a></li>
+                </ul>
+            <?php } else { ?>
+                <form method="POST" action="/login" id="formLogin" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" id="inputEmail1" placeholder="E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="senha" class="form-control" id="inputPassword1" placeholder="Senha">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Entrar</button>
+                </form>
             <?php } ?>
-        </div>
-        
+        </div><!--/.navbar-collapse -->
     </div>
 </nav>
+

@@ -5,13 +5,13 @@ use App\Model\Contato;
 use App\Model\ContatoRepository;
 use Core\Controller;
 use Core\Response;
-use Core\Session;
+use Core\Auth;
 
 class ContatoController extends Controller
 {
     public function index()
     {
-        return $this->view('/site/contato/index', ['userId' => Session::getUserSession()->getId()]);
+        return $this->view('/site/contato/index', ['userId' => Auth::getUserSession()->getId()]);
     }
     
 
@@ -33,7 +33,7 @@ class ContatoController extends Controller
             $contato->setNome($dados->nome);
             $contato->setEmail($dados->email);
             $contato->setTelefone($dados->telefone);    
-            $contato->setUsuarioId(Session::getUserSession()->getId());
+            $contato->setUsuarioId(Auth::getUserSession()->getId());
             
             ContatoRepository::save($contato);
             
@@ -48,7 +48,7 @@ class ContatoController extends Controller
     {
         //verificar se os contatos pertence 
         
-        if ($userId == Session::getUserSession()->getId())
+        if ($userId == Auth::getUserSession()->getId())
         {
             $contacts = ContatoRepository::findContactsByUserId($userId);
             return $this->json(new Response('Lista de contato existente.', $contacts));

@@ -4,7 +4,7 @@ namespace Core;
 
 use App\Model\Usuario;
 
-class Session 
+class Auth 
 {
 
     /**
