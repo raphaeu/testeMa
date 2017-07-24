@@ -11,6 +11,7 @@ class Usuario
     private $email;
     private $senha;
     private $perfil;
+    private $contatos;
 
 
     public function setId($id)
@@ -54,16 +55,20 @@ class Usuario
     {
         return $this->senha;
     }
-    function getPerfil() {
+    public function getPerfil() {
         return $this->perfil;
     }
 
-    function setPerfil($perfil) {
+    public function setPerfil($perfil) {
         $this->perfil = $perfil;
     }
+    
+    public function getContatos()
+    {
+        return ContatoRepository::findContactsByUserId($this->id);
+    }
 
-
-
+    
 
 
 }

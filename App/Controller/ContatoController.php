@@ -15,7 +15,7 @@ class ContatoController extends Controller
     }
     
 
-    public function salvar()
+    public function save($id=null)
     {
 
         $dados = json_decode($this->getData());
@@ -29,6 +29,7 @@ class ContatoController extends Controller
         if (empty($erros)) {
             $contato = new Contato();
 
+            !empty($id) ? $contato->setId($dados->id) : '';
             $contato->setNome($dados->nome);
             $contato->setEmail($dados->email);
             $contato->setTelefone($dados->telefone);    
@@ -55,6 +56,21 @@ class ContatoController extends Controller
            //lancar erro de aceso negado
         }   
     }
-   
+    
+    
+    public function delete($id)
+    {
+        ContatoRepository::delete($id);
+        return $this->json(new Response('Contato excluido com sucesso.'));
 
+    }
+    
+    public function edit($id)
+    {
+        $contact = ContatoRepository::findById($id);
+        return $this->json(new Response('', $contact));
+        
+    }
+   
+    
 }

@@ -53,37 +53,66 @@ class ContatoRepository {
        return $stmt->execute();
     }
 
-    public static function destroy($id){
+    public static function delete($id){
         $sql = 'DELETE FROM contato WHERE id=:id';
         $stmt = Db::getInstance()->prepare($sql);
-        $stmt->bindParam('id', $contato->getId(), PDO::PARAM_INT);
+        $id = $contato->getId();
+        $stmt->bindParam('id', $id , PDO::PARAM_INT);
         return $stmt->execute();
     }
 
 
-    public static function findContactsByUserId($userId){
-    $sql = '
-        SELECT
-            id
-            ,nome
-            ,telefone
-            ,email
-            ,usuario_id
-        FROM
-            contato
-        WHERE
-            usuario_id = :id
-        
-    ';
-    $stmt = Db::getInstance()->prepare($sql);
-    $stmt->bindParam('id', $userId, PDO::PARAM_INT);
-    $stmt->execute();
+    public static function findContactsByUserId($userId)
+    {
+        $sql = '
+            SELECT
+                id
+                ,nome
+                ,telefone
+                ,email
+                ,usuario_id
+            FROM
+                contato
+            WHERE
+                usuario_id = :id
 
-    $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $contacts;
+        ';
+        $stmt = Db::getInstance()->prepare($sql);
+        $stmt->bindParam('id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $contacts;
         
         
     }
+    
+
+    public static function findById($id)
+    {
+        $sql = '
+            SELECT
+                id
+                ,nome
+                ,telefone
+                ,email
+                ,usuario_id
+            FROM
+                contato
+            WHERE
+                id = :id
+
+        ';
+        $stmt = Db::getInstance()->prepare($sql);
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $contact = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $contact;
+        
+        
+    }
+    
     
 }
 
