@@ -39,7 +39,6 @@ class UsuarioRepository {
             $stmt = Db::getInstance()->prepare('
                 UPDATE FROM usuario SET
                     nome = :nome
-                    ,telefone = :telefone
                     ,email = :email
                     ,senha = :senha
                 WHERE
@@ -53,13 +52,11 @@ class UsuarioRepository {
                 INSERT INTO usuario
                 (
                     nome
-                    ,telefone
                     ,email
                     ,senha
                     ,perfil
                 ) VALUES (
                     :nome
-                    ,:telefone
                     ,:email
                     ,:senha
                     ,:perfil
@@ -69,14 +66,12 @@ class UsuarioRepository {
 
         $id         =   $usuario->getId();
         $nome       =   $usuario->getNome();
-        $telefone   =   $usuario->getTelefone();
         $email      =   $usuario->getEmail();
         $senha      =   $usuario->getSenha();
         $perfil     =   $usuario->getPerfil();
 
 
         $stmt->bindParam('nome', $nome, \PDO::PARAM_STR);
-        $stmt->bindParam('telefone', $telefone, \PDO::PARAM_STR);
         $stmt->bindParam('email', $email, \PDO::PARAM_STR);
         $stmt->bindParam('senha', $senha, \PDO::PARAM_STR);
         $stmt->bindParam('perfil', $perfil, \PDO::PARAM_INT);
@@ -99,7 +94,7 @@ class UsuarioRepository {
 
     public function find($id){
         $sql = '
-//            SELECT
+           SELECT
                 id
                 ,nome
                 ,telefone

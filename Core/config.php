@@ -2,7 +2,7 @@
 
 const DB_USER = 'root';
 const DB_PASSWORD = 'root';
-const DB_NAME = 'madero';
+const DB_NAME = 'mm';
 const DB_HOST = 'localhost';
 
 const DEBUG = 0;

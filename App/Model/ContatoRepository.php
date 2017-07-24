@@ -9,14 +9,14 @@ use App\Model\Contato;
 
 class ContatoRepository {
 
-    public static function save(Contato $contato){
-
+    public static function save(Contato $contato)
+    {
         if (!empty($contato->getId())){                    
             $stmt = Db::getInstance()->prepare('
                 UPDATE contato SET
                     nome = :nome
-                    ,telefone = :telefone
                     ,email = :email
+                    ,telefone = :telefone
                     ,usuario_id = :usuario_id
                 WHERE
                     id = :id
@@ -28,47 +28,47 @@ class ContatoRepository {
                 INSERT INTO contato
                 (
                     nome
-                    ,telefone
                     ,email
+                    ,telefone
                     ,usuario_id
                 ) VALUES (
                     :nome
-                    ,:telefone
                     ,:email
+                    ,:telefone
                     ,:usuario_id
                 )
             ');
         }
 
-        $usuarioId = $contato->getUsuarioId();   
         $nome = $contato->getNome();
-        $telefone = $contato->getTelefone();
         $email = $contato->getEmail();
+        $telefone = $contato->getTelefone();
+        $usuarioId = $contato->getUsuarioId();   
         
-        $stmt->bindParam('usuario_id', $usuarioId , PDO::PARAM_INT);
         $stmt->bindParam('nome', $nome , PDO::PARAM_STR);
-        $stmt->bindParam('telefone', $telefone , PDO::PARAM_STR);
         $stmt->bindParam('email', $email , PDO::PARAM_STR);
-
+        $stmt->bindParam('telefone', $telefone , PDO::PARAM_STR);
+        $stmt->bindParam('usuario_id', $usuarioId , PDO::PARAM_INT);
+        
        return $stmt->execute();
     }
-
-    public static function delete($id){
+    
+    public static function delete($id)
+    {
         $sql = 'DELETE FROM contato WHERE id=:id';
         $stmt = Db::getInstance()->prepare($sql);        
         $stmt->bindParam('id', $id , PDO::PARAM_INT);
         return $stmt->execute();
     }
-
-
+    
     public static function findContactsByUserId($userId)
     {
         $sql = '
             SELECT
                 id
                 ,nome
-                ,telefone
                 ,email
+                ,telefone
                 ,usuario_id
             FROM
                 contato
@@ -93,8 +93,8 @@ class ContatoRepository {
             SELECT
                 id
                 ,nome
-                ,telefone
                 ,email
+                ,telefone
                 ,usuario_id as usuarioId
             FROM
                 contato
@@ -107,10 +107,7 @@ class ContatoRepository {
         $stmt->execute();
 
         $contact = $stmt->fetch(PDO::FETCH_ASSOC);
-        
         return $contact;
-        
-        
     }
     
     

@@ -7,15 +7,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Igenda</a>
+            <a class="navbar-brand" href="<?=(\Core\Auth::getUserSession())?'/contato':'/'?>">Igenda</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav ">
-                    <li><a href="/sobre">Saiba Mais</a></li>
-                </ul>
             <?php if (\Core\Auth::getUserSession()) { ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/logout">Sair</a></li>
+                  <li><a href="/contato">Contatos</a></li>
+                  <li><a href="/logout">Sair</a></li>
                 </ul>
             <?php } else { ?>
                 <form method="POST" action="/login" id="formLogin" class="navbar-form navbar-right">
@@ -28,7 +26,7 @@
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Entrar</button>
                 </form>
             <?php } ?>
-        </div><!--/.navbar-collapse -->
+        </div>
     </div>
 </nav>
 

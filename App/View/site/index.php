@@ -3,7 +3,7 @@ include(ROOT_VIEW . '/site/layout/header.php');
 ?>
 <?php if (!\Core\Auth::getUserSession()) { ?>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
+    
     <div class="jumbotron">
         <div class="container">
             <div class="row">
@@ -53,7 +53,7 @@ include(ROOT_VIEW . '/site/layout/header.php');
 
 <div class="container">
 
-    <!-- Example row of columns -->
+    
     <div class="row">
         <div class="col-md-4">
             <h2><span class="glyphicon glyphicon-flash " aria-hidden="true"></span> Rapido</h2>
@@ -135,7 +135,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                     window.location.replace("/contato");
                 },
                 error: function (xhr, resp, text) {
-                    alert(xhr.responseJSON.message);
+                    bootbox.alert(xhr.responseJSON.message);
                 }
             })
 

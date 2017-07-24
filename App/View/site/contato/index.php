@@ -3,8 +3,6 @@ include(ROOT_VIEW . '/site/layout/header.php');
 ?>
 
 <div class="container">
-
-    <div class="alert" id="messageContato" role="alert" style="display: none"></div>
     <div class="row">
         <div class="col-xs-6">
             <h2>Contatos</h2>
@@ -15,6 +13,7 @@ include(ROOT_VIEW . '/site/layout/header.php');
             </button>     
         </div>
     </div>
+    <div class="alert " id="messageContato" role="alert" style="display: none"></div>
     <?php include(ROOT_VIEW . '/site/contato/list.php') ?>
 
     <?php include(ROOT_VIEW . '/site/contato/form.php') ?>
@@ -97,35 +96,52 @@ include(ROOT_VIEW . '/site/layout/footer.php');
 
         $('body').on('click', '.excluir-btn', function (e) {
             var id = $(this).data('id');
-            if (confirm('Tem certeza que deseja excluir o contato?')) {
-                $.ajax({
-                    url: '/contato/' + id, // url where to submit the request
-                    type: 'DELETE', // type of action POST || GET
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    encode: true,
-                    success: function (result) {
-                        $('#messageContato').addClass('alert-success');
-                        $('#messageContato').html(result.message);
-                        $('#messageContato').show();
-                        renderTableContacts();
+            bootbox.confirm({
+                message: "Tem certeza que deseja excluir o contato?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes',
+                        className: 'btn-success'
                     },
-                    error: function (xhr, resp, text) {
-                        $(self).find('#message').removeClass('alert-success');
-                        $(self).find('#message').addClass('alert-danger');
-                        $(self).find('#message').html('<b>' + xhr.responseJSON.message + '</b></br>');
-                        $.each(xhr.responseJSON.body, function (index, value) {
-                            $(self).find('#message').append(value + '</br>');
-                        });
-                        $(self).find('#message').show();
+                    cancel: {
+                        label: 'No',
+                        className: 'btn-danger'
                     }
-                });
-            }
+                },
+                callback: function (result) {
+                    if (result){
+                      $.ajax({
+                          url: '/contato/' + id, // url where to submit the request
+                          type: 'DELETE', // type of action POST || GET
+                          contentType: "application/json; charset=utf-8",
+                          dataType: "json",
+                          encode: true,
+                          success: function (result) {
+                              $('#messageContato').addClass('alert-success');
+                              $('#messageContato').html(result.message);
+                              $('#messageContato').show();
+                              renderTableContacts();
+                          },
+                          error: function (xhr, resp, text) {
+                              $(self).find('#message').removeClass('alert-success');
+                              $(self).find('#message').addClass('alert-danger');
+                              $(self).find('#message').html('<b>' + xhr.responseJSON.message + '</b></br>');
+                              $.each(xhr.responseJSON.body, function (index, value) {
+                                  $(self).find('#message').append(value + '</br>');
+                              });
+                              $(self).find('#message').show();
+                          }
+                      });
+                      
+                    }
+                }
+            });            
         });
 
         function renderTableContacts()
-        {
+        {   
             $('#contatos-table tbody').html('');
+            
             $.ajax({
                 url: '/contato/listar/<?= $userId ?>', // url where to submit the request
                 type: 'GET', // type of action POST || GET
@@ -133,7 +149,6 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                 dataType: "json",
                 encode: true,
                 success: function (result) {
-
                     var trHTML = '';
                     $.each(result.body, function (index, value) {
                         trHTML +=
@@ -145,6 +160,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                                 '&nbsp;<button class="btn btn-danger btn-xs excluir-btn" data-id="' + value.id + '"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir</button></div></td>' +
                                 '</tr>';
                     });
+                    trHTML = trHTML ? trHTML : '<tr><td colspan="4">Nenhum contato cadastrado.</td></tr>';
                     $('#contatos-table').append(trHTML);
 
                 },
@@ -154,10 +170,11 @@ include(ROOT_VIEW . '/site/layout/footer.php');
             });
         }
 
+    
+
         renderTableContacts();
-
-
     });
+    
 
 
 

@@ -11,7 +11,7 @@
         <title>Igenda</title>
 
         <!-- Bootstrap core CSS -->
-        <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/public/css/main.css" rel="stylesheet">
         <script src="/public/js/utils.js"></script>
 

@@ -7,11 +7,10 @@ class Usuario
 
     private $id;
     private $nome;
-    private $telefone;
     private $email;
     private $senha;
     private $perfil;
-    private $contatos;
+
 
 
     public function setId($id)
@@ -22,10 +21,6 @@ class Usuario
     {
         $this->nome = $nome;
     }
-    public function setTelefone($telefone)
-    {
-        $this->telefone = $telefone;
-    }
     public function setEmail($email)
     {
         $this->email = $email;
@@ -34,7 +29,11 @@ class Usuario
     {
         $this->senha = $senha;
     }
-
+    public function setPerfil($perfil) {
+        $this->perfil = $perfil;
+    }
+    
+    
     public function getId()
     {
         return $this->id;
@@ -42,10 +41,6 @@ class Usuario
     public function getNome()
     {
         return $this->nome;
-    }
-    public function getTelefone()
-    {
-        return $this->telefone;
     }
     public function getEmail()
     {
@@ -59,14 +54,7 @@ class Usuario
         return $this->perfil;
     }
 
-    public function setPerfil($perfil) {
-        $this->perfil = $perfil;
-    }
-    
-    public function getContatos()
-    {
-        return ContatoRepository::findContactsByUserId($this->id);
-    }
+
 
     
 

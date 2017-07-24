@@ -77,12 +77,6 @@ return array(
         'action'     =>   'logout',
         'authorize' => Profile::all()
     ),
-    array(
-        'method'     =>   'GET',
-        'route'   =>   '/teste',
-        'controller' =>   'SiteController',
-        'action'     =>   'teste',
-        'authorize' => [Profile::GUEST]
-    ),
+
 
 );

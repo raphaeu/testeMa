@@ -34,7 +34,7 @@ class ContatoController extends Controller
             $contato->setEmail($dados->email);
             $contato->setTelefone($dados->telefone);    
             $contato->setUsuarioId(Auth::getUserSession()->getId());
-            
+
             ContatoRepository::save($contato);
             
             return $this->json(new Response('Contato salvo com sucesso.'));

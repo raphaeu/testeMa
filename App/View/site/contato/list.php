@@ -9,6 +9,9 @@
                         <th></th> 
                     </tr> 
                 </thead> 
+                <tbody>
+                  <tr><td colspan="4">Carregando...</td></tr>
+                </tbody>
             </table>
         </div>
     </div>
