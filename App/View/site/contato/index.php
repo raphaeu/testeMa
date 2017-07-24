@@ -89,6 +89,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                     $('#messageContato').html(result.message);
                     $('#messageContato').show();
                     $('#modalContato').modal('toggle');
+                    renderTableContacts();
                 },
                 error: function (xhr, resp, text) {
                     $(self).find('#message').removeClass('alert-success');
@@ -106,21 +107,28 @@ include(ROOT_VIEW . '/site/layout/footer.php');
 
         });
 
+
+
+        function renderTableContacts()
+        {
     
-        $.ajax({
-            url: '/contato/listar/<?=$userId?>', // url where to submit the request
-            type: 'GET', // type of action POST || GET
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            encode: true,
-            success: function (result) {
-                
-            },
-            error: function (xhr, resp, text) {
-                
-            }
-        })
-    
+            $.ajax({
+                url: '/contato/listar/<?=$userId?>', // url where to submit the request
+                type: 'GET', // type of action POST || GET
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                encode: true,
+                success: function (result) {
+
+                },
+                error: function (xhr, resp, text) {
+
+                }
+            });
+        }
+        
+        renderTableContacts();
+        
     
     });
 
