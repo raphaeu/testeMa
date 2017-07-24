@@ -11,9 +11,9 @@ class ContatoRepository {
 
     public static function save(Contato $contato){
 
-        if (isset($contato->id)){
+        if (!empty($contato->getId())){                    
             $stmt = Db::getInstance()->prepare('
-                UPDATE FROM contato SET
+                UPDATE contato SET
                     nome = :nome
                     ,telefone = :telefone
                     ,email = :email
@@ -55,8 +55,7 @@ class ContatoRepository {
 
     public static function delete($id){
         $sql = 'DELETE FROM contato WHERE id=:id';
-        $stmt = Db::getInstance()->prepare($sql);
-        $id = $contato->getId();
+        $stmt = Db::getInstance()->prepare($sql);        
         $stmt->bindParam('id', $id , PDO::PARAM_INT);
         return $stmt->execute();
     }
@@ -96,7 +95,7 @@ class ContatoRepository {
                 ,nome
                 ,telefone
                 ,email
-                ,usuario_id
+                ,usuario_id as usuarioId
             FROM
                 contato
             WHERE
@@ -107,7 +106,8 @@ class ContatoRepository {
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        $contact = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $contact = $stmt->fetch(PDO::FETCH_ASSOC);
+        
         return $contact;
         
         

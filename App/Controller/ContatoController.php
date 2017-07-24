@@ -28,7 +28,7 @@ class ContatoController extends Controller
 
         if (empty($erros)) {
             $contato = new Contato();
-
+            
             !empty($id) ? $contato->setId($dados->id) : '';
             $contato->setNome($dados->nome);
             $contato->setEmail($dados->email);
@@ -68,6 +68,7 @@ class ContatoController extends Controller
     public function edit($id)
     {
         $contact = ContatoRepository::findById($id);
+        
         return $this->json(new Response('', $contact));
         
     }

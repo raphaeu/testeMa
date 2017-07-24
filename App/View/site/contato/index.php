@@ -65,13 +65,13 @@ include(ROOT_VIEW . '/site/layout/footer.php');
 
 
         $("#formContato").on('submit', function () {
-
+            var idContato = $(this).find('[name=id]').val();
             // Validando campos
-            var type = $(this).find('[name=id]').val() == "" ? 'POST' : 'PUT';
+            var type = idContato == "" ? 'POST' : 'PUT';
             var self = this;
             // enviando dados via ajax
             $.ajax({
-                url: $(this).attr('action'), // url where to submit the request
+                url: $(this).attr('action') + '/' + idContato, // url where to submit the request
                 type: type, // type of action POST || GET
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -103,13 +103,14 @@ include(ROOT_VIEW . '/site/layout/footer.php');
         $('body').on('click', '.editar-btn', function (e) {
             var id = $(this).data('id');
             $.ajax({
-                url: '/contato/editar/' + id, // url where to submit the request
+                url: '/contato/' + id, // url where to submit the request
                 type: 'GET', // type of action POST || GET
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 encode: true,
                 success: function (result) {
                     var contato = result.body;
+                    $('#formContato [name=id]').val(contato.id);
                     $('#formContato [name=nome]').val(contato.nome);
                     $('#formContato [name=email]').val(contato.email);
                     $('#formContato [name=telefone]').val(contato.telefone);
@@ -134,6 +135,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                         $('#messageContato').addClass('alert-success');
                         $('#messageContato').html(result.message);
                         $('#messageContato').show();
+                        renderTableContacts();
                     },
                     error: function (xhr, resp, text) {
                         $(self).find('#message').removeClass('alert-success');
