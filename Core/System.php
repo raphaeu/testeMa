@@ -51,6 +51,7 @@ class System {
             include(ROOT_VIEW . '/erros/404.php');
         } catch (Exception $e) {
             http_response_code(500);
+            throw $e;
             include(ROOT_VIEW . '/erros/500.php');
         }
     }
