@@ -7,20 +7,14 @@ use Core\Exception\EmptyAuthorizeException;
 
 class Authorizer {
 
-    private $authorizeds;
-
-    public function __construct($authorized) {
-        $this->authorizeds = $authorized;
-    }
-
-    public function isAuthorized() {  
+     public static function isAuthorized($authorizeds) {  
         
         //Caso não esteja preenchido lança exceção
-        if (!is_array($this->authorizeds) || empty($this->authorizeds)) {
+        if (!is_array($authorizeds) || empty($authorizeds)) {
             throw new EmptyAuthorizeException;
         }
         //Caso seja liberado para o perfil GUEST retorna autorizadio
-        if (in_array(Profile::GUEST, $this->authorizeds)) {            
+        if (in_array(Profile::GUEST, $authorizeds)) {            
             return true;
         }
         $usuario = Session::getUserSession();
@@ -29,7 +23,7 @@ class Authorizer {
             throw new AuthenticationException('Usuário não logado');
         }
         
-        foreach ($this->authorizeds as $authorized) {
+        foreach ($authorizeds as $authorized) {
             if($usuario->getPerfil() == $authorized) {
                 return true;
             }
@@ -37,5 +31,7 @@ class Authorizer {
         
         throw new Exception\AuthorizationException('Usuário não autorizado');
     }
+    
 
+    
 }

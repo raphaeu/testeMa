@@ -39,14 +39,37 @@ return array(
         'action'    =>   'listContacts',
         'authorize' =>  [Profile::USER, Profile::MASTER]
     ),
+    array(
+        'method'    =>   'GET',
+        'route'     =>   '/contato/:id',
+        'controller'=>   'ContatoController',
+        'action'    =>   'edit',
+        'authorize' =>  [Profile::USER, Profile::MASTER]
+    ),
 
     array(
         'method'    =>   'POST',
         'route'     =>   '/contato',
         'controller'=>   'ContatoController',
-        'action'    =>   'salvar',
+        'action'    =>   'save',
         'authorize' =>  [Profile::USER, Profile::MASTER]
     ),
+    array(
+        'method'    =>   'DELETE',
+        'route'     =>   '/contato/:id',
+        'controller'=>   'ContatoController',
+        'action'    =>   'delete',
+        'authorize' =>  [Profile::USER, Profile::MASTER]
+    ),
+
+    array(
+        'method'    =>   'PUT',
+        'route'     =>   '/contato/:id',
+        'controller'=>   'ContatoController',
+        'action'    =>   'save',
+        'authorize' =>  [Profile::USER, Profile::MASTER]
+    ),
+
     array(
         'method'     =>   'GET',
         'route'   =>   '/logout',

@@ -1,15 +1,6 @@
 <?php
 include(ROOT_VIEW . '/site/layout/header.php');
 ?>
-<!-- Main component for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <h1>Navbar example</h1>
-    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>To see the difference between static and fixed top navbars, just scroll.</p>
-    <p>
-        <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-    </p>
-</div>
 
 <div class="row">
     <div class="col-md-6">
@@ -94,6 +85,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                 data: JSON.stringify(ConvertFormToJSON($(this))),
                 encode: true,
                 success: function (result) {
+                    $(self)[0].reset();
                     $(self).find('#message').removeClass('alert-danger');
                     $(self).find('#message').addClass('alert-success');
                     $(self).find('#message').html(result.message);
@@ -119,6 +111,7 @@ include(ROOT_VIEW . '/site/layout/footer.php');
         // click on button submit
         $("#formLogin").on('submit', function () {
 
+
             // Validando campos
 
             var self = this;
@@ -131,8 +124,8 @@ include(ROOT_VIEW . '/site/layout/footer.php');
                 data: JSON.stringify(ConvertFormToJSON($(this))),
                 encode: true,
                 success: function (result) {
+                   $(self)[0].reset();
                    window.location.replace("/contato");
-
                 },
                 error: function (xhr, resp, text) {
                     $(self).find('#message').removeClass('alert-success');

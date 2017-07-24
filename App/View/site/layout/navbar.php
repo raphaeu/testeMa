@@ -15,6 +15,12 @@
                 <li><a href="#login">Login</a></li>
                 <li><a href="#registrar">Registrar</a></li>
             </ul>
+            <?php if (\Core\Session::getUserSession()) { ?>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout">Sair</a></li>
+            </ul>
+            <?php } ?>
         </div>
+        
     </div>
 </nav>

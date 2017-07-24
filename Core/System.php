@@ -27,9 +27,9 @@ class System {
             $authorized = $router->getAuthorization();
 
 
-            $auth = new Authorizer($authorized);
+            $auth = Authorizer::isAuthorized($authorized);
 
-            $auth->isAuthorized();
+            
 
             // Instanciando classe e setando parametros por reflection
             $this->controllerIntance = new $controller;
